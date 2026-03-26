@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser'
 import assignmentRoutes from './routes/assignments.js'
 import timetableRoutes from "./routes/timetable.js"
 import gpaRoutes from "./routes/gpa.js"
+import notesRoutes from "./routes/notes.js"
 
 dotenv.config()
 
@@ -24,6 +25,7 @@ app.use("/api/auth",            authRoutes)
 app.use("/api/assignments",     assignmentRoutes)
 app.use("/api/timetable",       timetableRoutes)
 app.use("/api/gpa",             gpaRoutes)
+app.use("/api/notes",            notesRoutes)
 
 
 

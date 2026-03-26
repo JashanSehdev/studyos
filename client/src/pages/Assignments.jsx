@@ -57,7 +57,7 @@ export default function Assignments() {
           onClick={() => setShowForm(true)}
           className="px-4 py-2 rounded-xl text-sm font-semibold text-white transition-all"
           style={{
-            background: 'linear-gradient(135deg, #6C63FF, #8B85FF)',
+            background: 'linear-gradient(135deg, #6C63FF, #8B85FF, #6C63FF, #8B85FF)',
             boxShadow: '0 4px 24px #6C63FF44'
           }}
         >

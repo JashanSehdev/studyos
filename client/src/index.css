@@ -12,3 +12,13 @@
   --color-background: #13131F;
   --font-sans: 'Plus Jakarta Sans', sans-serif;
 }
+
+/* Hide scrollbar while keeping functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
+}
