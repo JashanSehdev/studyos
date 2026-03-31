@@ -40,8 +40,8 @@ export const signup = async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
@@ -80,29 +80,31 @@ export const login = async (req, res) => {
       return res.status(400).json({ message: "Invalid email and password" });
     }
 
-    const token = jwt.sign(
-      { userId: user.id },
-      process.env.JWT_SECRET,
-      { expiresIn: "7d" },
-    );
+    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
+      expiresIn: "7d",
+    });
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false,
-      sameSite: "lax",
+      secure: true,
+      sameSite: "none",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
     res.json({ user: { id: user.id, name: user.name, email: user.email } });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Server Error'})
+    res.status(500).json({ message: "Server Error" });
   }
 };
 
 //-----Logout--------------
 
 export const logout = async (req, res) => {
-    res.clearCookie('token');
-    res.json({ message: 'logged out Successfully'});
-}
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+  });
+  res.json({ message: "logged out Successfully" });
+};
