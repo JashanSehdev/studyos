@@ -38,12 +38,14 @@ export const signup = async (req, res) => {
       { expiresIn: "7d" },
     );
 
-    res.cookie("token", token, {
+    const cookieOptions = {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      sameSite: "none",
       maxAge: 7 * 24 * 60 * 60 * 1000,
-    });
+    };
+
+    res.cookie("token", token, cookieOptions);
 
     res.status(201).json({ user: result.rows[0] });
   } catch (err) {
@@ -84,12 +86,14 @@ export const login = async (req, res) => {
       expiresIn: "7d",
     });
 
-    res.cookie("token", token, {
+    const cookieOptions = {
       httpOnly: true,
-      secure: true,
+      secure: process.env.NODE_ENV === "production",
       sameSite: "none",
       maxAge: 7 * 24 * 60 * 60 * 1000,
-    });
+    };
+
+    res.cookie("token", token, cookieOptions);
 
     res.json({ user: { id: user.id, name: user.name, email: user.email } });
   } catch (err) {
@@ -101,10 +105,12 @@ export const login = async (req, res) => {
 //-----Logout--------------
 
 export const logout = async (req, res) => {
-  res.clearCookie("token", {
+  const cookieOptions = {
     httpOnly: true,
-    secure: true,
+    secure: process.env.NODE_ENV === "production",
     sameSite: "none",
-  });
+  };
+
+  res.clearCookie("token", cookieOptions);
   res.json({ message: "logged out Successfully" });
 };
