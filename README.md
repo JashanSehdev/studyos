@@ -48,20 +48,14 @@
 ## 🏗 Architecture
 
 ```
-┌─────────────────────┐        ┌─────────────────────┐        ┌─────────────────────┐
+┌─────────────────────┐        ┌──────────────────────┐        ┌──────────────────────┐
 │      Frontend       │        │       Backend        │        │      Database        │
 │                     │        │                      │        │                      │
-│   React 18 + Vite   │ ──────▶│  Node.js + Express  │ ──────▶│     PostgreSQL        │
+│   React 18 + Vite   │──────▶│  Node.js + Express    │──────▶│     PostgreSQL       │
 │   Tailwind CSS v4   │        │   REST API           │        │  SQL Migrations      │
 │   React Router v6   │        │   JWT (HttpOnly)     │        │  Normalized Schema   │
-└─────────────────────┘        └─────────────────────┘        └─────────────────────┘
-                                         │
-                                         ▼
-                                ┌─────────────────────┐
-                                │      Claude AI       │
-                                │   Anthropic API      │
-                                │   (Notes Module)     │
-                                └─────────────────────┘
+└─────────────────────┘        └──────────────────────┘        └──────────────────────┘
+                                 
 ```
 
 ### Request Lifecycle
@@ -142,7 +136,7 @@ cd StudyOS
 cd server
 npm install
 cp .env.example .env       # Fill in your values (see below)
-npm run migrate            # Run database migrations
+npm run migrate.js          # Run database migrations
 npm run dev                # Starts on http://localhost:5000
 ```
 
@@ -202,8 +196,6 @@ StudyOS/
 ## 👨‍💻 Author
 
 **Jashan Sehdev**
-B.E Computer Science & Engineering — Chitkara University (2027)
-CGPA: 9.51 / 10
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/jashan-sehdev-57404027a/)
 [![GitHub](https://img.shields.io/badge/GitHub-100000?style=flat&logo=github&logoColor=white)](https://github.com/JashanSehdev)
