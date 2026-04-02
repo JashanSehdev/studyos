@@ -4,10 +4,10 @@
   "description": "> **An all-in-one academic productivity platform for university students**",
   "main": "index.js",
   "scripts": {
-    "build": "npm install --prefix client && npm run build --prefix client",
-    "start": "npm install --prefix server && node server/index.js",
-    "dev": "npm run dev --prefix server && npm run dev --prefix client"
-  },
+  "build": "npm install --prefix server && npm install --prefix client && npm run build --prefix client",
+  "start": "node server/index.js",
+  "dev": "concurrently \"npm run dev --prefix server\" \"npm run dev --prefix client\""
+},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/JashanSehdev/StudyOS.git"
