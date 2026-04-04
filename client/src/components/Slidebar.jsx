@@ -11,7 +11,7 @@ const Links = [
   { to: "/pomodoro", icon: "⏱️", label: "Pomodoro" },
 ];
 
-export default function Slidebar() {
+export default function Slidebar({ onClose, overlay = false }) {
     const [user, setUser] = useState('Unknown User');
     const [email, setEmail] = useState('');
     const { logout } = useAuth();
@@ -41,12 +41,21 @@ export default function Slidebar() {
     };
     
     return (
-        <aside className="w-64 min-h-screen bg-surface flex flex-col py-8 px-4 gap-2">
+        <aside className={`${overlay ? 'fixed inset-0 z-50' : 'w-64 min-h-screen'} bg-surface flex flex-col py-8 px-4 gap-2`}>
 
             {/* LOGO */}
-            <div className="mb-8 px-2">
-                <h1 className="text-primary text-2xl font-bold">StudyOS</h1>
-                <p className="text-gray-500 text-xs mt-1">Your academic cockpit</p>
+            <div className="mb-8 px-2 flex items-center justify-between">
+                <div>
+                    <h1 className="text-primary text-2xl font-bold">StudyOS</h1>
+                    <p className="text-gray-500 text-xs mt-1">Your academic cockpit</p>
+                </div>
+                <button
+                    onClick={onClose}
+                    className="text-gray-400 hover:text-white p-1 rounded-md hover:bg-white/10 transition-colors"
+                    aria-label="Close sidebar"
+                >
+                    ✕
+                </button>
             </div>
 
 
@@ -57,6 +66,7 @@ export default function Slidebar() {
                 key={link.to}
                 to={link.to}
                 end={link.to === '/'}
+                onClick={() => overlay && onClose && onClose()}
 
                 className= {({isActive})=> `flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all
                             ${isActive ? 'bg-primary text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white'}`
