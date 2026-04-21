@@ -1,25 +1,18 @@
-import pg from "pg";
-import dotenv from "dotenv";
-dotenv.config();
+import dotenv from 'dotenv'
+import { log } from 'console'
+import mongoose from 'mongoose'
 
-const { Pool } = pg;
+dotenv.config()
 
-const pool = new Pool(
-  process.env.DATABASE_URL
-    ? {
-        connectionString: process.env.DATABASE_URL,
-        ssl: {
-          rejectUnauthorized: false  // ← required for Neon
-        }
-      }
-    : {
-        user:     process.env.DB_USER,
-        host:     process.env.DB_HOST,
-        database: process.env.DB_NAME,
-        password: process.env.DB_PASSWORD,
-        port:     process.env.DB_PORT,
-      }    
-  
-)
+const url = process.env.DATABASE_URL
 
-export default pool;
+await mongoose.connect(url)
+.then(() => {
+  console.log("Mongo db has been connected")
+})
+.catch((err) => {
+  console.log("failed to connect db:", err.message)
+})
+
+
+

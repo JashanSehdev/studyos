@@ -220,7 +220,7 @@ export default function Dashboard() {
                 const isOverdue = new Date(a.due_date) < new Date()
                 return (
                   <div
-                    key={a.id}
+                    key={a._id}
                     className="flex items-center justify-between p-3 rounded-xl"
                     style={{ background: 'rgba(255,255,255,0.03)' }}
                   >
@@ -266,7 +266,7 @@ export default function Dashboard() {
             <div className="grid grid-cols-3 gap-3">
               {recentNotes.map(note => (
                 <div
-                  key={note.id}
+                  key={note._id}
                   className="p-4 rounded-xl border border-white/5 cursor-pointer hover:border-primary/30 transition-all"
                   style={{ background: 'rgba(255,255,255,0.03)' }}
                   onClick={() => navigate('/notes')}

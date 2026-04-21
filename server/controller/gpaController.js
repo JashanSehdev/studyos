@@ -1,5 +1,5 @@
-import pool from "../db.js"
-
+import mongoose, { mongo } from 'mongoose'
+import { GPA } from '../models/GPA.model.js'
 const GRADE_POINTS = {
   'O':  10,
   'A+': 9,
@@ -13,9 +13,14 @@ const GRADE_POINTS = {
 export async function getSubjects (req, res) {
 
     try{
-        const query = `SELECT * FROM subjects WHERE user_id = $1 ORDER BY created_at ASC`
-        const result = await pool.query(query,[req.userId]);
-        res.json(result.rows);
+        const result = await GPA.find({
+            user_id : new mongoose.Types.ObjectId(req.userId)
+        })
+
+        if (!result){
+            return res.status("404").json({message: "no record found"})
+        }
+        res.json(result);
 
     } catch (err) {
         console.error(err);
@@ -38,9 +43,19 @@ export async function createSubject (req, res) {
     const grade_point = GRADE_POINTS[grade] ?? 0
 
     try {
-        const query = `INSERT INTO subjects(user_id, name, credits, grade, grade_point, semester) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`
-        const result = await pool.query(query, [req.userId, name, creditsInt, grade, grade_point, semester])
-        res.json(result.rows[0])
+        const result = await GPA.create({
+            user_id : new mongoose.Types.ObjectId(req.userId),
+            name,
+            credits,
+            grade,
+            grade_point,
+            semester
+        })
+
+        if (!result) {
+            return res.status(401).json({message:"Cannot create new entry"})
+        }
+        res.json(result)
 
     } catch (err) {
         console.error(err)
@@ -49,18 +64,16 @@ export async function createSubject (req, res) {
 }
 
 export async function deleteSubject (req, res) {
-    const id = Number(req.params.id)
-
-    if (!Number.isInteger(id) || id <= 0) {
-        return res.status(400).json({ message: 'Invalid subject id' })
-    }
+    const id = req.params;
 
     try {
-        const query = `DELETE FROM subjects WHERE id = $1 AND user_id = $2`
-        const result = await pool.query(query, [id, req.userId])
+        const result = await GPA.findOneAndDelete({
+            user_id: new mongoose.Types.ObjectId(req.userId),
+            _id : new mongoose.Types.ObjectId(id)
+        })
 
-        if (result.rowCount === 0) {
-            return res.status(404).json({ message: 'Subject not found' })
+        if (!result){
+            return res.json({message: "error while deleting entry"})
         }
 
         res.status(200).json({ message: 'Subject has been deleted' })

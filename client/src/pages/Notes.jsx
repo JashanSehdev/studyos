@@ -152,7 +152,7 @@ export default function Notes() {
         <div className="flex flex-col gap-3">
           {filtered.map((note) => (
             <div
-              key={note.id}
+              key={note._id}
               className="p-4 rounded-2xl border border-white/10"
               style={{ background: 'rgba(30,30,46,0.85)' }}
             >
@@ -163,7 +163,7 @@ export default function Notes() {
                   <p className="text-gray-400 text-sm mt-2 line-clamp-3">{note.content}</p>
                 </div>
                 <button
-                  onClick={() => deleteNote(note.id)}
+                  onClick={() => deleteNote(note._id)}
                   className="text-gray-600 hover:text-red-400 transition-all text-sm ml-4"
                 >
                   ✕

@@ -177,7 +177,7 @@ export default function Assignments() {
         <div className="flex flex-col gap-3">
           {filtered.map(a => (
             <div
-              key={a.id}
+              key={a._id}
               className={`flex items-center gap-4 p-4 rounded-2xl border border-white/10 transition-all
                 ${a.status === 'completed' ? 'opacity-50' : ''}`}
               style={{ background: 'rgba(30,30,46,0.85)' }}
@@ -219,7 +219,7 @@ export default function Assignments() {
 
               {/* Delete */}
               <button
-                onClick={() => deleteAssignment(a.id)}
+                onClick={() => deleteAssignment(a._id)}
                 className="text-gray-600 hover:text-red-400 transition-all text-sm"
               >
                 ✕

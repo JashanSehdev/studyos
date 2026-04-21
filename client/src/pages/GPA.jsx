@@ -221,7 +221,7 @@ export default function GPA() {
               <div className="flex flex-col gap-2">
                 {semSubjects.map(s => (
                   <div
-                    key={s.id}
+                    key={s._id}
                     className="flex items-center gap-4 px-4 py-3 rounded-xl border border-white/10"
                     style={{ background: 'rgba(30,30,46,0.85)' }}
                   >
@@ -239,7 +239,7 @@ export default function GPA() {
                     </span>
 
                     <button
-                      onClick={() => deleteSubject(s.id)}
+                      onClick={() => deleteSubject(s._id)}
                       className="text-gray-600 hover:text-red-400 transition-all text-sm"
                     >
                       ✕

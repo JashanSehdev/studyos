@@ -1,11 +1,16 @@
-import pool from "../db.js";
-
+import mongoose from "mongoose";
+import { Notes } from "../models/notes.model.js"
 
 export async function getNotes(req, res) {
     try{
-        const query = `SELECT * FROM notes WHERE user_id = $1`;
-        const result = await pool.query(query, [req.userId]);
-        res.status(200).json(result.rows);
+        const notes = await Notes.find({
+            user_id : new mongoose.Types.ObjectId(req.userId)
+        })
+
+        if (!notes) {
+            return res.status(400).send({message: "Invalid input, Entry not found"})
+        }
+        res.status(200).json(notes);
 
     } catch (err) {
         console.error(err);
@@ -16,9 +21,18 @@ export async function getNotes(req, res) {
 export async function createNote(req, res) {
     const{title, content, subject} = req.body;
     try{
-        const query = `INSERT INTO notes (user_id, title, content, subject) VALUES ($1, $2, $3, $4) RETURNING *`
-        const result = await pool.query(query, [req.userId, title, content, subject]);
-        res.status(200).json(result.rows[0]);
+
+        const result = await Notes.create({
+            user_id : new mongoose.Types.ObjectId(req.userId),
+            title,
+            content,
+            subject
+        })
+        
+        if (!result) {
+            return res.status(400).json({message:"failed to create Note"})
+        }
+        res.status(200).json(result);
 
     } catch (err) {
         console.error(err);
@@ -32,9 +46,12 @@ export async function updateNote(req, res) {
 
     try {
 
-        const query = `UPDATE notes SET title = $2, subject = $3, summary = $4, content = $5 WHERE id = $1 RETURNING *`
-        const result = await pool.query(query, [id, title, subject, summary, content]);
-        res.status(200).json(result.rows[0]);
+        const result = await Notes.findOneAndUpdate({
+            user_id: new mongoose.Types.ObjectId(req.userId),
+            _id : id
+        })
+
+        res.status(200).json(result);
 
     } catch (err) {
         console.error(err);
@@ -45,8 +62,12 @@ export async function updateNote(req, res) {
 export async function deleteNote (req, res) {
     const {id} = req.params;
     try {
-        const query = `DELETE FROM notes WHERE id = $1`;
-        await pool.query(query, [id]);
+
+        const result = await Notes.findOneAndDelete({
+            user_id: new mongoose.Types.ObjectId(req.userId),
+            _id : id
+        })
+
         res.status(200).json({message : 'Note Deleted Successfully'})
 
     } catch (err) {
