@@ -106,7 +106,7 @@ export default function Dashboard() {
 
         {/* Pending Assignments */}
         <div
-          className="rounded-2xl p-5 border border-white/10 cursor-pointer hover:border-primary/40 transition-all"
+          className=" tracking tight rounded-2xl p-5 border border-white/10 cursor-pointer hover:border-primary/40 transition-all"
           style={{ background: 'rgba(30,30,46,0.85)' }}
           onClick={() => navigate('/assignments')}
         >
@@ -122,7 +122,7 @@ export default function Dashboard() {
 
         {/* Today's Classes */}
         <div
-          className="rounded-2xl p-5 border border-white/10 cursor-pointer hover:border-primary/40 transition-all"
+          className=" tracking-tight rounded-2xl p-5 border border-white/10 cursor-pointer hover:border-primary/40 transition-all"
           style={{ background: 'rgba(30,30,46,0.85)' }}
           onClick={() => navigate('/timetable')}
         >
@@ -138,7 +138,7 @@ export default function Dashboard() {
 
         {/* Recent Notes */}
         <div
-          className="rounded-2xl p-5 border border-white/10 cursor-pointer hover:border-primary/40 transition-all"
+          className=" tracking-tight rounded-2xl p-5 border border-white/10 cursor-pointer hover:border-primary/40 transition-all"
           style={{ background: 'rgba(30,30,46,0.85)' }}
           onClick={() => navigate('/notes')}
         >
@@ -163,7 +163,7 @@ export default function Dashboard() {
           style={{ background: 'rgba(30,30,46,0.85)' }}
         >
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-white font-semibold text-sm">Today's Classes</h3>
+            <h3 className=" tracking-tight text-white font-semibold text-sm">Today's Classes</h3>
             <span className="text-gray-500 text-xs">{todayName}</span>
           </div>
 
@@ -203,7 +203,7 @@ export default function Dashboard() {
           style={{ background: 'rgba(30,30,46,0.85)' }}
         >
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-white font-semibold text-sm">Upcoming Assignments</h3>
+            <h3 className="tracking-tight text-white font-semibold text-sm">Upcoming Assignments</h3>
             <span
               className="text-primary text-xs cursor-pointer hover:underline"
               onClick={() => navigate('/assignments')}
@@ -251,7 +251,7 @@ export default function Dashboard() {
           style={{ background: 'rgba(30,30,46,0.85)' }}
         >
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-white font-semibold text-sm">Recent Notes</h3>
+            <h3 className=" tracking-tight text-white font-semibold text-sm">Recent Notes</h3>
             <span
               className="text-primary text-xs cursor-pointer hover:underline"
               onClick={() => navigate('/notes')}
