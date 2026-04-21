@@ -76,7 +76,8 @@ const createTables = async () => {
               credits       INTEGER NOT NULL,
               grade         VARCHAR(5),
               grade_point   DECIMAL(3,2),
-              semester      VARCHAR(20)
+              semester      VARCHAR(20),
+              created_at  TIMESTAMP DEFAULT NOW()
             
             )
         `)
