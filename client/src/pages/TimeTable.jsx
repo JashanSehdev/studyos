@@ -207,14 +207,15 @@ export default function Timetable() {
                 <div className="flex flex-col gap-2">
                   {getEntriesForDay(day).map(entry => (
                     <div
-                      key={entry.id}
+                      key={entry._id}
                       className={`p-3 rounded-xl border text-xs relative group ${subjectColorMap[entry.subject]}`}
                     >
                       {/* Delete button */}
                       <button
-                        onClick={() => deleteEntry(entry.id)}
+                        onClick={() => deleteEntry(entry._id)}
+                  
                         className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 text-gray-400 hover:text-red-400 transition-all"
-                      >
+                        >
                         ✕
                       </button>
 

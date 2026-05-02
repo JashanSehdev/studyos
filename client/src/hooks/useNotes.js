@@ -39,9 +39,9 @@ export default function useNotes () {
     async function updateNote(id, data) {
         try {
             const result = await API.put(`/notes/${id}`, data);
-            if (result && result.data){
-                setNotes(prev => prev.map(a => Number(a.id) === Number(id) ? result.data : a));
-            }
+            
+            setNotes(prev => prev.map(a => a._id === id ? result.data : a));
+            
         } catch (err) {
              console.error(err);
         }
@@ -51,7 +51,7 @@ export default function useNotes () {
         try {
             await API.delete(`/notes/${id}`);
 
-            setNotes(prev => prev.filter(a => Number(a.id) !== id));
+            setNotes(prev => prev.filter(a => String(a._id) !== id));
 
         } catch (err) {
             console.error(err);

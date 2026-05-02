@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
+import { User } from "../models/user.model.js"
 import bcrypt from "bcrypt";
-import pool from "../db.js";
 
 // --signup----------
 export const signup = async (req, res) => {
@@ -12,13 +12,9 @@ export const signup = async (req, res) => {
       return res.status(400).json({ message: "All fields required" });
     }
 
-    const exisiting = await pool.query(
-      `
-            select * from users where email = $1`,
-      [email],
-    );
+    const exisiting = await User.findOne({email});
 
-    if (exisiting.rows.length > 0) {
+    if (exisiting) {
       return res.status(400).json({ message: "User already registered" });
     }
     // hashing password
@@ -26,14 +22,14 @@ export const signup = async (req, res) => {
 
     // save user details
 
-    const result = await pool.query(
-      `
-        INSERT INTO users(name, email, password) VALUES ($1, $2, $3) RETURNING id, name, email`,
-      [name, email, hashedPassword],
-    );
+    const user = await User.create({
+      name,
+      email,
+      password: hashedPassword
+    });
 
     const token = jwt.sign(
-      { userId: result.rows[0].id },
+      { userId: user._id },
       process.env.JWT_SECRET,
       { expiresIn: "7d" },
     );
@@ -47,7 +43,11 @@ export const signup = async (req, res) => {
 
     res.cookie("token", token, cookieOptions);
 
-    res.status(201).json({ user: result.rows[0] });
+    res.status(201).json({ user: {
+      id: user._id,
+      name: user.name,
+      email: user.email
+    } });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server Error" });
@@ -64,20 +64,14 @@ export const login = async (req, res) => {
       return res.status(400).json({ message: "All fields required" });
     }
 
-    const result = await pool.query(
-      `
-            SELECT * FROM users where email = $1
-        `,
-      [email],
-    );
+    const user = await User.findOne({email});
 
-    if (result.rows.length === 0) {
+    if (!user) {
       return res.status(400).json({ message: "Invalid email or password" });
     }
-
-    const user = result.rows[0];
+    
     const isMatch = await bcrypt.compare(password, user.password);
-
+    
     if (!isMatch) {
       return res.status(400).json({ message: "Invalid email and password" });
     }

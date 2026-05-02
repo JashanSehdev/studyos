@@ -33,8 +33,8 @@ export default function useAssignments() {
 
     const updateAssignment = async (id, data) => {
         try{
-            const res = await API.put(`./assignments/${id}`, data);
-            setAssignments(prev =>  prev.map(a => a.id === id? res.data : a))
+            const res = await API.put(`/assignments/${id}`, data);
+            setAssignments(prev =>  prev.map(a => a._id === id? res.data : a))
 
         } catch(err) {
 
@@ -45,7 +45,7 @@ export default function useAssignments() {
         try{
             await API.delete(`/assignments/${id}`);
 
-            setAssignments(prev => prev.filter(a => Number(a.id) !== Number(id)))
+            setAssignments(prev => prev.filter(a => a._id !== id))
         } catch(err) {
             console.error(err);                        
         }
@@ -53,7 +53,7 @@ export default function useAssignments() {
 
     const toggleStatus = (assignment) => {
         const newStatus = assignment.status === 'pending' ? 'completed' : 'pending'
-        updateAssignment(assignment.id, {...assignment, status: newStatus})
+        updateAssignment(assignment._id, {...assignment, status: newStatus})
     }
 
     return {

@@ -26,7 +26,7 @@ export default function useGPA() {
     const addSubject = async (data) => {
         try {
             const res = await API.post("/gpa", data);
-            if (res.data && res.data.id) {
+            if (res.data && res.data._id) {
                 setSubjects((prev) => [...prev, res.data]);
             }
             return res.data;
@@ -38,7 +38,7 @@ export default function useGPA() {
     const deleteSubject = async (id) => {
         try {
             await API.delete(`/gpa/${id}`);
-            setSubjects((prev) => prev.filter((e) => Number(e.id) !== Number(id)));
+            setSubjects((prev) => prev.filter((e) => e._id !== id));
         } catch (err) {
             console.error(err);
         }

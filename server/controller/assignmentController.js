@@ -1,16 +1,13 @@
-import pool from "../db.js";
+import mongoose from "mongoose";
+import { Assignment } from "../models/assignment.model.js";
 
 //Get all assignment for loggedIn user
 export const getAssignments = async (req, res) => {
   try {
-    const result = await pool.query(
-      `
-        SELECT * FROM  assignments where user_id = $1 ORDER BY due_date ASC
-        `,
-      [req.userId],
-    );
-
-    res.json(result.rows);
+    const assignments = await Assignment.find({
+      user_id: new mongoose.Types.ObjectId(req.userId),
+    }).sort({ due_date: 1 });
+    res.json(assignments);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
@@ -18,16 +15,16 @@ export const getAssignments = async (req, res) => {
 };
 
 export const createAssignment = async (req, res) => {
-    const { title, subject, due_date, priority } = req.body;
+  const { title, subject, due_date, priority } = req.body;
   try {
-    const result = await pool.query(
-      `
-            INSERT INTO assignments(user_id, title, subject, due_date, priority)
-            VALUES($1, $2, $3, $4, $5) RETURNING *;
-            `,
-      [req.userId, title, subject, due_date, priority],
-    );
-    res.status(200).json(result.rows[0]);
+    const assignment = await Assignment.create({
+      user_id: new mongoose.Types.ObjectId(req.userId),
+      title,
+      subject,
+      due_date,
+      priority,
+    });
+    res.status(200).json(assignment);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server Error" });
@@ -35,37 +32,59 @@ export const createAssignment = async (req, res) => {
 };
 
 export const updateAssignment = async (req, res) => {
-    const { id } = req.params;
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ message: "Invalid assignment ID" });
+  }
 
   try {
     const { title, subject, due_date, priority, status } = req.body;
 
-    const result = await pool.query(
-      `
-            UPDATE assignments SET title = $1, subject = $2, due_date = $3, priority = $4, status = $5
-       WHERE id = $6 AND user_id = $7 RETURNING *
-            `,
-      [title, subject, due_date, priority, status, id, req.userId],
+    const updatedAssignment = await Assignment.findOneAndUpdate(
+      {
+        user_id: new mongoose.Types.ObjectId(req.userId),
+        _id: new mongoose.Types.ObjectId(id),
+      },
+      {
+        title,
+        subject,
+        due_date,
+        priority,
+        status,
+      },
+      { returnDocument: 'after' },
     );
 
-    res.json(result.rows[0]);
+    if (!updatedAssignment) {
+      return res.status(404).json({ message: " Assignment not found" });
+    }
+    res.json(updatedAssignment);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server Error" });
   }
 };
 
-export const deleteAssignment = async(req, res) => {
-    const {id} = req.params
+export const deleteAssignment = async (req, res) => {
+  const { id } = req.params;
 
-    try{
-        await pool.query(`
-                DELETE FROM assignments WHERE id = $1 AND user_id = $2
-            `, [id, req.userId])
-        res.status(200).json({ message: 'Assignment Deleted'})
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ message: "Invalid assignment ID" });
+  }
 
-    } catch(err){
-        console.error(err);
-        res.status(500).json({ message: "Server Error" });
+  try {
+    const deleted = await Assignment.findOneAndDelete({
+      user_id: new mongoose.Types.ObjectId(req.userId),
+      _id: new mongoose.Types.ObjectId(id)
+    });
+
+    if (!deleted) {
+      return res.status(404).json({ message: "Assignment not found" });
     }
-}
+    res.status(200).json({ message: "Assignment Deleted" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server Error" });
+  }
+};

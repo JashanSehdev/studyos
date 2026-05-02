@@ -110,8 +110,7 @@ export default function Dashboard() {
           style={{ background: 'rgba(30,30,46,0.85)' }}
           onClick={() => navigate('/assignments')}
         >
-          <p className="text-3xl mb-2">📋</p>
-          <p className="text-white text-2xl font-bold">{pendingAssignments.length}</p>
+          <p className="text-3xl font-bold text-white mb-2">📋{pendingAssignments.length}</p>
           <p className="text-gray-400 text-xs mt-1">Pending Assignments</p>
           {overdueAssignments.length > 0 && (
             <p className="text-red-400 text-xs mt-2">
@@ -126,8 +125,7 @@ export default function Dashboard() {
           style={{ background: 'rgba(30,30,46,0.85)' }}
           onClick={() => navigate('/timetable')}
         >
-          <p className="text-3xl mb-2">🗓️</p>
-          <p className="text-white text-2xl font-bold">{todayClasses.length}</p>
+          <p className="text-3xl text-white font-bold mb-3">🗓️{todayClasses.length}</p>
           <p className="text-gray-400 text-xs mt-1">Classes Today</p>
           {todayClasses.length > 0 && (
             <p className="text-green-400 text-xs mt-2">
@@ -142,8 +140,7 @@ export default function Dashboard() {
           style={{ background: 'rgba(30,30,46,0.85)' }}
           onClick={() => navigate('/notes')}
         >
-          <p className="text-3xl mb-2">📝</p>
-          <p className="text-white text-2xl font-bold">{notes.length}</p>
+          <p className="text-3xl text-white font-bold mb-2">📝{notes.length}</p>
           <p className="text-gray-400 text-xs mt-1">Total Notes</p>
           {notes.length > 0 && (
             <p className="text-blue-400 text-xs mt-2">
@@ -159,7 +156,7 @@ export default function Dashboard() {
 
         {/* Today's Timetable */}
         <div
-          className="rounded-2xl p-5 border border-white/10"
+          className="rounded-2xl p-5 border border-white/10 col-span-2 md:col-span-1"
           style={{ background: 'rgba(30,30,46,0.85)' }}
         >
           <div className="flex items-center justify-between mb-4">
@@ -199,7 +196,7 @@ export default function Dashboard() {
 
         {/* Pending Assignments List */}
         <div
-          className="rounded-2xl p-5 border border-white/10"
+          className="rounded-2xl p-5 border border-white/10 col-span-2 md:col-span-1"
           style={{ background: 'rgba(30,30,46,0.85)' }}
         >
           <div className="flex items-center justify-between mb-4">
@@ -223,7 +220,7 @@ export default function Dashboard() {
                 const isOverdue = new Date(a.due_date) < new Date()
                 return (
                   <div
-                    key={a.id}
+                    key={a._id}
                     className="flex items-center justify-between p-3 rounded-xl"
                     style={{ background: 'rgba(255,255,255,0.03)' }}
                   >
@@ -269,7 +266,7 @@ export default function Dashboard() {
             <div className="grid grid-cols-3 gap-3">
               {recentNotes.map(note => (
                 <div
-                  key={note.id}
+                  key={note._id}
                   className="p-4 rounded-xl border border-white/5 cursor-pointer hover:border-primary/30 transition-all"
                   style={{ background: 'rgba(255,255,255,0.03)' }}
                   onClick={() => navigate('/notes')}

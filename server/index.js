@@ -1,17 +1,16 @@
+import dotenv from 'dotenv'
+dotenv.config()
 import express from 'express'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import cors from 'cors'
-import dotenv from 'dotenv'
+import './db.js'
 import authRoutes from './routes/auth.js'
 import cookieParser from 'cookie-parser'
 import assignmentRoutes from './routes/assignments.js'
 import timetableRoutes from "./routes/timetable.js"
 import gpaRoutes from "./routes/gpa.js"
 import notesRoutes from "./routes/notes.js"
-
-
-dotenv.config()
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)

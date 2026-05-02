@@ -8,7 +8,6 @@
 ![Express](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS_v4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
-![Claude AI](https://img.shields.io/badge/Claude_AI-D97757?style=for-the-badge&logo=anthropic&logoColor=white)
 
 ---
 
@@ -41,7 +40,6 @@
 | 📝 **Assignments Tracker** | Track deadlines, status, and priority across all subjects |
 | 🎓 **GPA Calculator** | Indian 10-point scale with subject-wise credit and grade input |
 | ⏱ **Pomodoro Timer** | Focus sessions with animated SVG progress ring and cycle counter |
-| 🤖 **AI Notes** | Claude-powered note assistant for context-aware academic help |
 
 ---
 
@@ -97,8 +95,6 @@ Controller  ──▶  PostgreSQL Query  ──▶  JSON Response
 - **PostgreSQL** — Relational database
 - **SQL Migrations** — Version-controlled schema changes
 
-### Integrations
-- **Claude AI (Anthropic API)** — AI-powered notes assistant
 
 ### Dev Tools
 - **Postman** — API testing
@@ -184,7 +180,7 @@ StudyOS/
 ├── server/                   # Express backend
 │   ├── controllers/          # Route handler logic
 │   ├── middleware/            # Auth middleware (JWT verify)
-│   ├── migrations/           # SQL migration files
+│   ├── db/                   # SQL migration files
 │   ├── routes/               # API route definitions
 │   └── index.js
 │

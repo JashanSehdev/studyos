@@ -33,7 +33,7 @@ export default function useTimetable() {
     const deleteEntry = async (id) => {
         try {
             await API.delete(`/timetable/${id}`)
-            setEntries(prev => prev.filter(e => Number(e.id) !== Number(id)))
+            setEntries(prev => prev.filter(e => String(e._id) !== String(id)))
         } catch (err) {
             console.error(err);
         }

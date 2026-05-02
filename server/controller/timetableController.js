@@ -1,12 +1,14 @@
-import pool from "../db.js"
+import mongoose from "mongoose";
+import { TimeTable } from "../models/timetable.model.js";
+import { Assignment } from "../models/assignment.model.js";
 
 export async function getTimetable(req, res) {
     try{
-        const result = await pool.query(`
-                SELECT * FROM timetable WHERE user_id = $1
-            `, [req.userId]);
+        const result = await TimeTable.find({
+            user_id : new mongoose.Types.ObjectId(req.userId)
+        })
         
-        res.json(result.rows);
+        res.json(result);
 
     } catch(err) {
         console.error(err);
@@ -21,11 +23,21 @@ export async function createEntry (req, res) {
     try{
         const {subject, day, start_time, end_time, room, professor} = req.body;
 
-        const query = `INSERT INTO timetable (user_id, subjects, day, start_time, end_time, room, professor) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *`
+        const entry = await TimeTable.create({
+            user_id : new mongoose.Types.ObjectId(req.userId),
+            subject,
+            day,
+            start_time,
+            end_time,
+            room,
+            professor
+        })
 
-        const result = await pool.query(query,[req.userId, subject, day, start_time, end_time, room, professor]);
+        if (!entry) {
+            return res.status(404).json({ message: 'Entry not found' });
+        }
 
-        res.status(201).json(result.rows[0]);
+        res.status(201).json(entry);
 
     } catch (err) {
         console.error(err);
@@ -35,11 +47,18 @@ export async function createEntry (req, res) {
 
 export async function deleteEntry (req, res) {
     const {id} = req.params;
-    try {
-        const query = `DELETE FROM timetable WHERE id = $1 AND user_id = $2`
-        const result = await pool.query(query, [id, req.userId]);
 
-        if (result.rowCount === 0) {
+    if (!mongoose.isValidObjectId(id)) {
+        return res.status(400).json({ message: 'Invalid entry id' });
+    }
+
+    try {
+        const result = await TimeTable.findOneAndDelete({
+            user_id : new mongoose.Types.ObjectId(req.userId),
+            _id : id
+        })
+
+        if (!result) {
             return res.status(404).json({ message: 'Entry not found' });
         }
 
