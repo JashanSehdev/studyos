@@ -39,9 +39,9 @@ export default function useNotes () {
     async function updateNote(id, data) {
         try {
             const result = await API.put(`/notes/${id}`, data);
-            if (result && result.data){
-                setNotes(prev => prev.map(a => String(a._id) === String(id) ? result.data : a));
-            }
+            
+            setNotes(prev => prev.map(a => a._id === id ? result.data : a));
+            
         } catch (err) {
              console.error(err);
         }

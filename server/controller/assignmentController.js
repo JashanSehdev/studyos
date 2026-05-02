@@ -53,7 +53,7 @@ export const updateAssignment = async (req, res) => {
         priority,
         status,
       },
-      { new: true },
+      { returnDocument: 'after' },
     );
 
     if (!updatedAssignment) {

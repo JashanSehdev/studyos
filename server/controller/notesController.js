@@ -49,7 +49,7 @@ export async function updateNote(req, res) {
         const result = await Notes.findOneAndUpdate({
             user_id: new mongoose.Types.ObjectId(req.userId),
             _id : id
-        })
+        },{title, content, subject}, {returnDocument: 'after'})
 
         res.status(200).json(result);
 
