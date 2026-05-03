@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import useGPA from '../hooks/useGPA.js'
+import flagIcon from '../asset/flag.svg'
 
 const GRADES   = ['O', 'A+', 'A', 'B+', 'B', 'C']
 const SEMESTERS = ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4', 'Sem 5', 'Sem 6', 'Sem 7', 'Sem 8']
@@ -201,7 +202,7 @@ export default function GPA() {
         <p className="text-gray-500 text-sm">Loading...</p>
       ) : subjects.length === 0 ? (
         <div className="text-center py-20">
-          <p className="text-4xl mb-3">🎯</p>
+          <img src={flagIcon} alt="clipboard" className="mx-auto mb-3 h-20"/>
           <p className="text-gray-500 text-sm">No subjects yet. Add one to calculate your GPA!</p>
         </div>
       ) : (

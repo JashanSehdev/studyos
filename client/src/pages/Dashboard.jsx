@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import API from '../api/axios'
+import check from '../asset/check.svg'
+import coffee from '../asset/coffee.svg'
+import clipboard from '../asset/clipboard.svg'
 
 const QUOTES = [
   { text: "The secret of getting ahead is getting started.", author: "Mark Twain" },
@@ -102,11 +105,11 @@ export default function Dashboard() {
       </div>
 
       {/* Stats Row */}
-      <div className="grid grid-cols-3 gap-4 mb-6">
+      <div className="grid grid-cols-3 gap-10 md:gap-2 mb-6 overflow-scroll min-h-24">
 
         {/* Pending Assignments */}
         <div
-          className=" tracking tight rounded-2xl p-5 border border-white/10 cursor-pointer hover:border-primary/40 transition-all"
+          className=" min-w-30 tracking-tight rounded-2xl p-5 border border-white/10 cursor-pointer hover:border-primary/40 transition-all"
           style={{ background: 'rgba(30,30,46,0.85)' }}
           onClick={() => navigate('/assignments')}
         >
@@ -121,7 +124,7 @@ export default function Dashboard() {
 
         {/* Today's Classes */}
         <div
-          className=" tracking-tight rounded-2xl p-5 border border-white/10 cursor-pointer hover:border-primary/40 transition-all"
+          className=" tracking-tight rounded-2xl p-5 border border-white/10 cursor-pointer hover:border-primary/40 transition-all min-w-30"
           style={{ background: 'rgba(30,30,46,0.85)' }}
           onClick={() => navigate('/timetable')}
         >
@@ -136,7 +139,7 @@ export default function Dashboard() {
 
         {/* Recent Notes */}
         <div
-          className=" tracking-tight rounded-2xl p-5 border border-white/10 cursor-pointer hover:border-primary/40 transition-all"
+          className=" tracking-tight rounded-2xl p-5 border border-white/10 cursor-pointer hover:border-primary/40 transition-all min-w-30"
           style={{ background: 'rgba(30,30,46,0.85)' }}
           onClick={() => navigate('/notes')}
         >
@@ -166,7 +169,9 @@ export default function Dashboard() {
 
           {todayClasses.length === 0 ? (
             <div className="text-center py-6">
-              <p className="text-2xl mb-2">🎉</p>
+
+              {/* coffee image */}
+              <img src={coffee} alt="No classes" className=" mx-auto mb-2 w-16 h-16" /> 
               <p className="text-gray-500 text-xs">No classes today!</p>
             </div>
           ) : (
@@ -211,7 +216,7 @@ export default function Dashboard() {
 
           {pendingAssignments.length === 0 ? (
             <div className="text-center py-6">
-              <p className="text-2xl mb-2">✅</p>
+              <img src={check} alt="No Assignments" className=" mx-auto mb-2 w-16 h-16" /> 
               <p className="text-gray-500 text-xs">All caught up!</p>
             </div>
           ) : (
@@ -259,7 +264,7 @@ export default function Dashboard() {
 
           {recentNotes.length === 0 ? (
             <div className="text-center py-4">
-              <p className="text-2xl mb-2">📝</p>
+              <img src={clipboard} alt="No classes" className=" mx-auto mb-2 w-16 h-16" /> 
               <p className="text-gray-500 text-xs">No notes yet. Start writing!</p>
             </div>
           ) : (

@@ -2,6 +2,7 @@ import useNotes from "../hooks/useNotes";
 import { useState } from "react";
 import Modal from "../components/Modal";
 import Assignments from "./Assignments";
+import fileIcon from "../asset/file-text.svg"
 
 const emptyForm = {
   title: "",
@@ -180,7 +181,7 @@ export default function Notes() {
         <p className="text-gray-500 text-sm">Loading...</p>
       ) : filtered.length === 0 ? (
         <div className="text-center py-20">
-          <p className="text-4xl mb-3">📝</p>
+          <img src={fileIcon} alt="clipboard" className="mx-auto mb-3 h-20"/>
           <p className="text-gray-500 text-sm">No notes here. Add one!</p>
         </div>
       ) : (
