@@ -105,7 +105,7 @@ export default function Dashboard() {
       </div>
 
       {/* Stats Row */}
-      <div className="grid grid-cols-3 gap-10 md:gap-2 mb-6 overflow-scroll min-h-24">
+      <div className="grid grid-cols-3 gap-10 md:gap-2 mb-6 overflow-scroll scrollbar-hide min-h-24">
 
         {/* Pending Assignments */}
         <div
