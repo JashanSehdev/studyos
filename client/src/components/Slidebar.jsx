@@ -1,14 +1,20 @@
 import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
+import fileIcon from '../asset/small-icon/file.svg'
+import clockIcon from '../asset/small-icon/clock.svg'
+import homeIcon from '../asset/small-icon/home.svg'
+import calenderIcon from '../asset/small-icon/calendar.svg'
+import flagIcon from '../asset/small-icon/flag.svg'
+import clipboardIcon from '../asset/small-icon/clipboard.svg'
 
 const Links = [
-  { to: "/", icon: "🏚️", label: "Dashboard" },
-  { to: "/assignments", icon: "📋", label: "Assignments" },
-  { to: "/timetable", icon: "🗓️", label: "Timetable" },
-  { to: "/notes", icon: "📝", label: "Notes" },
-  { to: "/gpa", icon: "🎯", label: "GPA" },
-  { to: "/pomodoro", icon: "⏱️", label: "Pomodoro" },
+  { to: "/", icon: homeIcon, label: "Dashboard" },
+  { to: "/assignments", icon: clipboardIcon, label: "Assignments" },
+  { to: "/timetable", icon: calenderIcon, label: "Timetable" },
+  { to: "/notes", icon: fileIcon, label: "Notes" },
+  { to: "/gpa", icon: flagIcon, label: "GPA" },
+  { to: "/pomodoro", icon: clockIcon, label: "Pomodoro" },
 ];
 
 export default function Slidebar({ onClose, overlay = false }) {
@@ -72,7 +78,7 @@ export default function Slidebar({ onClose, overlay = false }) {
                             ${isActive ? 'bg-primary text-white' : 'text-gray-400 hover:bg-white/5 hover:text-white'}`
                             }
                 >
-                    <span>{link.icon}</span>
+                    <img src={link.icon} alt={link.label} />
                     <span>{link.label}</span>
                 </NavLink>
             ))}

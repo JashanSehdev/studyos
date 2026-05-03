@@ -1,6 +1,7 @@
 import { useState } from "react";
 import useAssignments from "../hooks/useAssignments";
 import Modal from "../components/Modal";
+import clipboard from "../asset/clipboard.svg"
 
 const SUBJECTS = [
   "Computer Science",
@@ -230,7 +231,7 @@ export default function Assignments() {
         <p className="text-gray-500 text-sm">Loading...</p>
       ) : filtered.length === 0 ? (
         <div className="text-center py-20">
-          <p className="text-4xl mb-3">📋</p>
+          <img src={clipboard} alt="clipboard" className="mx-auto mb-3 h-20"/>
           <p className="text-gray-500 text-sm">No assignments here. Add one!</p>
         </div>
       ) : (
